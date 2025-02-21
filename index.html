@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pharma Track Inventory Management System</title>
+  <!-- Bootstrap CSS -->  
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    /* Global Styles */
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: url('https://source.unsplash.com/1600x900/?warehouse,inventory') no-repeat center center fixed;
+      background-size: cover;
+      overflow-y: scroll;
+      color: #333;
+    }
+
+    /* Navbar Styling */
+    .navbar {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      padding: 0.5rem 1rem;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: #333;
+    }
+    
+    /* Main Layout */
+    .main-wrapper {
+      display: flex;
+    }
+    
+    /* Sidebar */
+    .sidebar {
+      flex: 0 0 200px;
+      background: rgba(255, 255, 255, 0.8);
+      border-right: 1px solid #ddd;
+    }
+    .sidebar a {
+      display: block;
+      padding: 15px;
+      color: #333;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .sidebar a:hover {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+    
+    /* Content */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+
+    .powerbi-container {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    
+    /* Footer-like section below the dashboard */
+    .footer-section {
+      background-color: #f8f9fa;
+    }
+    
+    /* Advertisement Carousel */
+    #adCarousel {
+      height: 100px;
+    }
+    #adCarousel .carousel-inner {
+      height: 100%;
+    }
+    #adCarousel .carousel-item > div {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #e9ecef;
+      color: #333;
+    }
+    
+    /* Transparent Login Modal Styling */
+    .modal-content {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: none;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .modal-header, .modal-footer {
+      border: none;
+    }
+    .modal-body input,
+    .modal-body select {
+      background: rgba(255, 255, 255, 0.5);
+      border: none;
+      border-radius: 5px;
+    }
+    .modal-body input:focus,
+    .modal-body select:focus {
+      outline: none;
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    }
+    .modal-dialog.login-modal {
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Inventory Dashboard</a>
+      <button
+        type="button"
+        class="btn btn-outline-primary ms-auto"
+        data-bs-toggle="modal"
+        data-bs-target="#loginModal"
+      >
+        Login
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Layout Wrapper -->
+  <div class="main-wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="index.html">Dashboard</a>
+      <a href="orders.html">Orders</a>
+      <a href="invoices.html">Invoices</a>
+      <a href="#">Customers</a>
+      <a href="products.html">Products</a>
+      <a href="#">Settings</a>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content">
+      <!-- Dashboard Container (Power BI iframe) -->
+      <div class="dashboard-container">
+        <iframe
+          title="Sales analysis"
+          class="powerbi-container"
+          src="https://app.powerbi.com/view?r=eyJrIjoiNTcyZDQ2ODQtOTAwNS00YzQ0LTkzNGEtZDA4ZDUzZDllMmY4IiwidCI6IjU3ZjljNGQzLWIyNGMtNGZhNy04YzQzLWI4N2I5Mjg0NTQ0MSJ9"
+          frameborder="0"
+          allowFullScreen="true"
+        ></iframe>
+      </div>
+
+      <!-- New Section Below Dashboard -->
+      <div class="footer-section">
+        <div class="container py-4">
+          <!-- Row 1: "Manage your inventory on the go!" -->
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <h5>Manage your inventory on the go!</h5>
+              <p>
+                Experience the ease of managing your inventory with the Pharma Track Inventory mobile app for Android &amp; iOS.
+              </p>
+            </div>
+            <div class="col-md-6 text-center">
+              <img src="https://via.placeholder.com/120x120.png?text=QR+Code" alt="QR Code" class="img-fluid me-3" style="max-height: 120px;" />
+              <img src="https://via.placeholder.com/200x350.png?text=Phone+App" alt="Mobile App" class="img-fluid" style="max-height: 200px;" />
+            </div>
+          </div>
+          <hr class="my-4" />
+          <!-- Row 2: Columns for Other Apps, Help & Support, etc. -->
+          <div class="row">
+            <div class="col-md-3">
+              <h6>OTHER Pharma Track APPS</h6>
+              <ul class="list-unstyled">
+                <li><a href="#">Ecommerce Software</a></li>
+                <li><a href="#">Subscription Billing</a></li>
+                <li><a href="#">100% Free Invoicing</a></li>
+                <li><a href="#">Expense Reporting</a></li>
+                <li><a href="#">CRM &amp; Other Apps</a></li>
+              </ul>
+            </div>
+            <div class="col-md-3">
+              <h6>HELP &amp; SUPPORT</h6>
+              <ul class="list-unstyled">
+                <li><a href="#">Contact Support</a></li>
+                <li><a href="#">Register for Webinars</a></li>
+                <li><a href="#">FAQ</a></li>
+              </ul>
+            </div>
+            <div class="col-md-3">
+              <h6>QUICK LINKS</h6>
+              <ul class="list-unstyled">
+                <li><a href="#">Getting Started</a></li>
+                <li><a href="#">Mobile Apps</a></li>
+                <li><a href="#">Add-ons</a></li>
+                <li><a href="#">What's New?</a></li>
+              </ul>
+            </div>
+            <div class="col-md-3">
+              <h6>CONTACT &amp; INFO</h6>
+              <p>
+                You can directly talk to us every Monday to Friday 9:00 AM to 7:00 PM
+              </p>
+              <p>Pharma Track Inventory India Helpline: 1800 309 9036 (Toll Free)</p>
+              <p class="small mb-0">&copy; 2025, Pharma Track Corporation Pvt. Ltd. All Rights Reserved.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Moving Advertisement Carousel -->
+      <div id="adCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div>
+              <h4>Medicine A – Available</h4>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div>
+              <h4>Medicine B – Limited Stock</h4>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div>
+              <h4>Medicine C – New Arrival</h4>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#adCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#adCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Transparent Login Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered login-modal">
+      <div class="modal-content">
+        <form id="loginForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Login</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Name -->
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input type="text" class="form-control" id="name" placeholder="Enter your name" required />
+            </div>
+            <!-- Phone -->
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required />
+            </div>
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" class="form-control" id="email" placeholder="Enter your email" required />
+            </div>
+            <!-- Dropdown for Login Type -->
+            <div class="mb-3">
+              <label for="userType" class="form-label">Login as</label>
+              <select class="form-select" id="userType" required>
+                <option value="">Select an option</option>
+                <option value="shopOwner">Shop Owner</option>
+                <option value="distributor">Distributor</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom Script for Login Redirection and Auto Popup -->
+  <script>
+    // Login redirection based on user type
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      var userType = document.getElementById("userType").value;
+      if (userType === "distributor") {
+        window.location.href = "distributor.html";
+      } else if (userType === "shopOwner") {
+        window.location.href = "shopowner.html";
+      } else {
+        alert("Please select a valid login type.");
+      }
+    });
+
+    // Show the login modal automatically only once per session
+    document.addEventListener("DOMContentLoaded", function() {
+      if (!sessionStorage.getItem("loginPopupShown")) {
+        var loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
+        loginModal.show();
+        sessionStorage.setItem("loginPopupShown", "true");
+      }
+    });
+  </script>
+</body>
+</html>

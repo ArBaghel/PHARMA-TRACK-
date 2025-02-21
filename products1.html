@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pharma Track Inventory Management System - Products (Admin)</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    /* Global Styles */
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: 'Montserrat', sans-serif;
+      background: url('https://source.unsplash.com/1600x900/?warehouse,inventory') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      overflow-y: scroll;
+    }
+    /* Navigation Bar */
+    .navbar {
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: #333;
+    }
+    /* Main Layout */
+    .main-wrapper {
+      display: flex;
+    }
+    /* Sidebar */
+    .sidebar {
+      flex: 0 0 200px;
+      background: rgba(255,255,255,0.9);
+      border-right: 1px solid #ddd;
+      padding-top: 20px;
+    }
+    .sidebar a {
+      display: block;
+      padding: 15px;
+      color: #333;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .sidebar a:hover {
+      background: #f0f0f0;
+    }
+    .sidebar a.active {
+      font-weight: bold;
+      color: #000;
+      background: none;
+    }
+    /* Content Area */
+    .content {
+      flex: 1;
+      padding: 20px;
+      background-color: #fff;
+    }
+    /* Search Bar */
+    .search-container {
+      margin-bottom: 20px;
+    }
+    /* Products Grid */
+    .products-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .product-card {
+      background: rgba(255,255,255,0.95);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      width: 250px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .product-card h6 {
+      margin: 0.5rem 0;
+      font-weight: bold;
+    }
+    .product-card p {
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .product-card .price {
+      color: #333;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    /* Button Styling */
+    .btn.btn-success,
+    .btn.btn-primary,
+    .btn.btn-danger {
+      margin: 2px;
+    }
+    .btn.btn-success {
+      background-color: #f8f9fa;
+      color: #333;
+      border: 1px solid #ccc;
+    }
+    .btn.btn-success:hover {
+      background-color: #e4e4e4;
+      border-color: #bbb;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Pharma Track Inventory Dashboard</a>
+      <button type="button" class="btn btn-outline-primary ms-auto" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+    </div>
+  </nav>
+  <!-- Main Layout Wrapper -->
+  <div class="main-wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="index.html">Dashboard</a>
+      <a href="orders.html">Orders</a>
+      <a href="invoices.html">Invoices</a>
+      <a href="products.html" class="active">Products</a>
+      <a href="#">Customers</a>
+      <a href="#">Settings</a>
+    </div>
+    <!-- Content Area -->
+    <div class="content">
+      <div class="container my-4">
+        <h4 class="mb-3">All Products</h4>
+        <!-- Search Bar -->
+        <div class="search-container mb-3">
+          <input type="text" id="productSearch" class="form-control" placeholder="Search products by name..." />
+        </div>
+        <!-- Add New Product Button -->
+        <div class="mb-3">
+          <button class="btn btn-primary" id="addNewProductBtn" data-bs-toggle="modal" data-bs-target="#productModal">Add New Product</button>
+        </div>
+        <!-- Products Grid -->
+        <div class="products-container" id="productsContainer">
+          <!-- Product cards will be dynamically inserted here -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Login Modal (existing) -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="loginForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Login</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input type="text" class="form-control" id="name" placeholder="Enter your name" required />
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" class="form-control" id="email" placeholder="Enter your email" required />
+            </div>
+            <div class="mb-3">
+              <label for="userType" class="form-label">Login as</label>
+              <select class="form-select" id="userType" required>
+                <option value="">Select an option</option>
+                <option value="shopOwner">Shop Owner</option>
+                <option value="distributor">Distributor</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Product Modal for Add/Edit Product -->
+  <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="productModalLabel">Add Product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="productForm">
+            <div class="mb-3">
+              <label for="productName" class="form-label">Product Name</label>
+              <input type="text" id="productName" class="form-control" placeholder="Enter product name" required />
+            </div>
+            <div class="mb-3">
+              <label for="productPrice" class="form-label">Price</label>
+              <input type="text" id="productPrice" class="form-control" placeholder="Enter price" required />
+            </div>
+            <div class="mb-3">
+              <label for="productDescription" class="form-label">Description</label>
+              <textarea id="productDescription" class="form-control" placeholder="Enter description" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="productImage" class="form-label">Image URL</label>
+              <input type="text" id="productImage" class="form-control" placeholder="Enter image URL" required />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="saveProductBtn">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bootstrap Bundle with Popper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    /********************************************************
+     *                Products Data & Functionality         *
+     ********************************************************/
+    // Preload 10 products into productsData array if not in localStorage
+    let productsData = JSON.parse(localStorage.getItem('products')) || [
+      { id: 1, name: "Paracetamol", price: "Rs.100.00", description: "Pain reliever and fever reducer.", image: "https://via.placeholder.com/200x200?text=Paracetamol" },
+      { id: 2, name: "Ibuprofen", price: "Rs.150.00", description: "Anti-inflammatory pain reliever.", image: "https://via.placeholder.com/200x200?text=Ibuprofen" },
+      { id: 3, name: "Amoxicillin", price: "Rs.200.00", description: "Antibiotic for bacterial infections.", image: "https://via.placeholder.com/200x200?text=Amoxicillin" },
+      { id: 4, name: "Aspirin", price: "Rs.80.00", description: "Pain reliever and anti-inflammatory.", image: "https://via.placeholder.com/200x200?text=Aspirin" },
+      { id: 5, name: "Cetirizine", price: "Rs.90.00", description: "Antihistamine for allergies.", image: "https://via.placeholder.com/200x200?text=Cetirizine" },
+      { id: 6, name: "Loratadine", price: "Rs.110.00", description: "Non-drowsy antihistamine.", image: "https://via.placeholder.com/200x200?text=Loratadine" },
+      { id: 7, name: "Omeprazole", price: "Rs.120.00", description: "Acid reducer for stomach issues.", image: "https://via.placeholder.com/200x200?text=Omeprazole" },
+      { id: 8, name: "Metformin", price: "Rs.140.00", description: "For managing type 2 diabetes.", image: "https://via.placeholder.com/200x200?text=Metformin" },
+      { id: 9, name: "Atorvastatin", price: "Rs.160.00", description: "Cholesterol-lowering medication.", image: "https://via.placeholder.com/200x200?text=Atorvastatin" },
+      { id: 10, name: "Azithromycin", price: "Rs.180.00", description: "Antibiotic for various infections.", image: "https://via.placeholder.com/200x200?text=Azithromycin" }
+    ];
+    let currentEditingProductId = null;
+    
+    function saveProductsToStorage() {
+      localStorage.setItem('products', JSON.stringify(productsData));
+    }
+    
+    // Render products based on optional filter text
+    function renderProducts(filterText = "") {
+      const container = document.getElementById("productsContainer");
+      container.innerHTML = "";
+      const filteredProducts = productsData.filter(product =>
+        product.name.toLowerCase().includes(filterText.toLowerCase())
+      );
+      filteredProducts.forEach(product => {
+        const card = document.createElement("div");
+        card.classList.add("product-card");
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" />
+          <h6>${product.name}</h6>
+          <p>${product.description}</p>
+          <p class="price">${product.price}</p>
+          <button class="btn btn-sm btn-primary edit-product-btn" data-id="${product.id}">Edit</button>
+          <button class="btn btn-sm btn-danger delete-product-btn" data-id="${product.id}">Delete</button>
+        `;
+        container.appendChild(card);
+      });
+      // Attach event listeners for Edit buttons
+      document.querySelectorAll(".edit-product-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+          const id = parseInt(this.getAttribute("data-id"));
+          editProduct(id);
+        });
+      });
+      // Attach event listeners for Delete buttons
+      document.querySelectorAll(".delete-product-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+          const id = parseInt(this.getAttribute("data-id"));
+          deleteProduct(id);
+        });
+      });
+    }
+    
+    // Edit product: fill modal with product details and set editing id
+    function editProduct(productId) {
+      const product = productsData.find(p => p.id === productId);
+      if(product) {
+        currentEditingProductId = productId;
+        document.getElementById("productName").value = product.name;
+        document.getElementById("productPrice").value = product.price;
+        document.getElementById("productDescription").value = product.description;
+        document.getElementById("productImage").value = product.image;
+        document.getElementById("productModalLabel").textContent = "Edit Product";
+        // Show the modal (if not already visible)
+        var productModal = new bootstrap.Modal(document.getElementById("productModal"));
+        productModal.show();
+      }
+    }
+    
+    // Delete product by id
+    function deleteProduct(productId) {
+      if(confirm("Are you sure you want to delete this product?")) {
+        productsData = productsData.filter(p => p.id !== productId);
+        saveProductsToStorage();
+        renderProducts(document.getElementById("productSearch").value);
+      }
+    }
+    
+    // Initial render of products
+    renderProducts();
+    
+    // Search functionality
+    document.getElementById("productSearch").addEventListener("keyup", function() {
+      const searchText = this.value;
+      renderProducts(searchText);
+    });
+    
+    // Save product from modal (Add or Edit)
+    document.getElementById("saveProductBtn").addEventListener("click", function() {
+      const name = document.getElementById("productName").value;
+      const price = document.getElementById("productPrice").value;
+      const description = document.getElementById("productDescription").value;
+      const image = document.getElementById("productImage").value;
+      
+      if(name && price && image) {
+        if(currentEditingProductId) {
+          // Update existing product
+          productsData = productsData.map(product => {
+            if(product.id === currentEditingProductId) {
+              return { id: product.id, name, price, description, image };
+            }
+            return product;
+          });
+          currentEditingProductId = null;
+        } else {
+          // Add new product
+          const newId = productsData.length > 0 ? Math.max(...productsData.map(p => p.id)) + 1 : 1;
+          const newProduct = { id: newId, name, price, description, image };
+          productsData.push(newProduct);
+        }
+        saveProductsToStorage();
+        renderProducts(document.getElementById("productSearch").value);
+        // Reset form and modal title
+        document.getElementById("productForm").reset();
+        document.getElementById("productModalLabel").textContent = "Add Product";
+        // Hide modal
+        var productModalEl = document.getElementById('productModal');
+        var modal = bootstrap.Modal.getInstance(productModalEl);
+        modal.hide();
+      } else {
+        alert("Please fill in all required fields.");
+      }
+    });
+    
+    // When "Add New Product" button is clicked, reset form & title
+    document.getElementById("addNewProductBtn").addEventListener("click", function() {
+      currentEditingProductId = null;
+      document.getElementById("productForm").reset();
+      document.getElementById("productModalLabel").textContent = "Add Product";
+    });
+  </script>
+</body>
+</html>
